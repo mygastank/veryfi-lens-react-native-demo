@@ -16,6 +16,7 @@ import {
   VERYFI_API_KEY,
   VERYFI_URL,
 } from '@env';
+import * as Sentry from '@sentry/react-native';
 
 import {
   Image,
@@ -46,6 +47,10 @@ const veryfiLensSettings = {
 
 const VeryfiLensEmitter = new NativeEventEmitter(VeryfiLens.NativeModule);
 let hasListeners = false;
+
+Sentry.init({
+  dsn: 'https://b8c1ee2bead34aa5b99f4901112e67d5@o333450.ingest.sentry.io/1860308',
+});
 
 const App = () => {
   const [log, setLog] = useState(
@@ -118,6 +123,11 @@ const App = () => {
         <View style={styles.veryfiButton}>
           <TouchableOpacity onPress={showCamera}>
             <Text style={styles.textBoldCenter}>COLLECT</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.veryfiButton}>
+          <TouchableOpacity onPress={() => Sentry.close()}>
+            <Text style={styles.textBoldCenter}>crash the app</Text>
           </TouchableOpacity>
         </View>
       </View>
